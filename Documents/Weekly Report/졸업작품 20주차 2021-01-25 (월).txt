@@ -30,3 +30,5 @@
 
 - 매주 일요일 오후 10시 전후로 서로 진행사항 보고
 
+프로젝트 깃 생성
+https://github.com/LabKM/BeanRiceHeaven
