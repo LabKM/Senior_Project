@@ -4,6 +4,5 @@ using UnityEngine;
 
 public interface ILiftable
 {
-    void GetUp(Transform transform);
-    void GetDown(Transform transform);
+    void LeftShift(Transform _transform);
 }

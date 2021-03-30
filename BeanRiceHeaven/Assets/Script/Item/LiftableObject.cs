@@ -6,24 +6,36 @@ public class LiftableObject : MonoBehaviour, ILiftable
 {
     public Material Outline;
     public Transform liftedPoint;
+    Rigidbody rigidbody;
     MeshRenderer mesh;
-    GameObject lifter;
+    BeanController lifter;
+    bool onHand;
 
-    public void GetUp(Transform _transform)
+    public void LeftShift(Transform _transform)
     {
         Vector3 offset = transform.position - liftedPoint.position;
         transform.position = _transform.position + offset;
-    }
-    public void GetDown(Transform _transform)
-    {
-
+        onHand = !onHand;
+        if (onHand)
+        {   
+            rigidbody.Sleep();
+            rigidbody.isKinematic = true;
+            transform.parent = _transform;
+        }
+        else
+        {   
+            rigidbody.WakeUp();
+            rigidbody.isKinematic = false;
+            transform.parent = null;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
+        if (!onHand && other.tag == "Player")
         {
-            lifter = other.gameObject;
+            lifter = other.GetComponent<BeanController>();
+            lifter.liftObject = this;
             List<Material> materials = new List<Material>();
             mesh.GetMaterials(materials);
             materials.Add(Outline);
@@ -33,8 +45,9 @@ public class LiftableObject : MonoBehaviour, ILiftable
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject == lifter)
+        if (!onHand && other.tag == "Player")
         {
+            lifter.liftObject = null;
             lifter = null;
             List<Material> materials = new List<Material>();
             mesh.GetMaterials(materials);
@@ -45,7 +58,9 @@ public class LiftableObject : MonoBehaviour, ILiftable
 
     void Start()
     {
+        rigidbody = GetComponent<Rigidbody>();
         mesh = GetComponent<MeshRenderer>();
         lifter = null;
+        onHand = false;
     }
 }

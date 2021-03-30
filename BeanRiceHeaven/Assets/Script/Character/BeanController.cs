@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BeanController : MonoBehaviour
-{   // Á¶ÀÛ¿¡ µû¶ó BeanÀ» Á¶ÀÛÇÏ´Â ½ºÅ©¸³Æ®
+{   // ï¿½ï¿½ï¿½Û¿ï¿½ ï¿½ï¿½ï¿½ï¿½ Beanï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½Å©ï¿½ï¿½Æ®
     [SerializeField]
     Bean bean;
     [SerializeField]
     CameraController cameraController;
+    [SerializeField]
+    Transform liftUp;
+    [SerializeField]
+    Transform liftDown;
     Rigidbody rigidbody;
     Vector3 lastMousePosition;
     public bool isInputable
@@ -15,6 +19,8 @@ public class BeanController : MonoBehaviour
         set; get;
     }
     public bool OnGround { get; set; }
+    public bool hand{get; set;}
+    public ILiftable liftObject { get; set; }
 
     void Start()
     {
@@ -22,6 +28,8 @@ public class BeanController : MonoBehaviour
         isInputable = true;
         lastMousePosition = Input.mousePosition;
         OnGround = true;
+        hand = false;
+        liftObject = null;
     }
 
     void Update()
@@ -30,6 +38,7 @@ public class BeanController : MonoBehaviour
         {
             RotateCamera();
             MovePlayerByInput();
+            Interact();
         }
     }
 
@@ -62,11 +71,23 @@ public class BeanController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) && OnGround)
         {
-
             bean.animator.SetTrigger("Jump");
             OnGround = false;
         }
         bean.Movement = Input.GetAxisRaw("Horizontal") * cameraController.Right + Input.GetAxisRaw("Vertical") * cameraController.Forward;
+    }
+
+    void Interact()
+    {
+        if (Input.GetMouseButtonDown(0) && liftObject != null) { 
+            if(!hand){
+                hand = true;
+                liftObject.LeftShift(liftUp);
+            }else{
+                hand = false;
+                liftObject.LeftShift(liftDown);
+            }
+        }
     }
 
     public void Jump(float power)
