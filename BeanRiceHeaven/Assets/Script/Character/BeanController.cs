@@ -14,6 +14,10 @@ public class BeanController : MonoBehaviour
     Transform liftDown;
     Rigidbody rigidbody;
     Vector3 lastMousePosition;
+    
+    [SerializeField]
+    MouseLocker mouseController;
+
     public bool isInputable
     {
         set; get;
@@ -26,7 +30,10 @@ public class BeanController : MonoBehaviour
     {
         rigidbody = GetComponent<Rigidbody>();
         isInputable = true;
+        
         lastMousePosition = Input.mousePosition;
+        mouseController.HideMouse();
+
         OnGround = true;
         hand = false;
         liftObject = null;
@@ -50,7 +57,7 @@ public class BeanController : MonoBehaviour
 
     void RotateCamera()
     {
-        Vector3 deltaMousePosition = Input.mousePosition - lastMousePosition;
+        Vector3 deltaMousePosition = Input.mousePosition - lastMousePosition; 
         Vector3 cameraEular = cameraController.transform.rotation.eulerAngles;
         float cameraEularX = cameraEular.x - deltaMousePosition.y;
         if (cameraEularX < 180f)
@@ -75,6 +82,12 @@ public class BeanController : MonoBehaviour
             OnGround = false;
         }
         bean.Movement = Input.GetAxisRaw("Horizontal") * cameraController.Right + Input.GetAxisRaw("Vertical") * cameraController.Forward;
+        if(Input.GetKeyDown(KeyCode.LeftAlt)){
+            mouseController.ShowMouse();
+        }else if(Input.GetKeyUp(KeyCode.LeftAlt)){
+            mouseController.HideMouse();
+            lastMousePosition = Input.mousePosition;
+        }
     }
 
     void Interact()

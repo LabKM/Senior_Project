@@ -175,6 +175,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3733749650123612747}
   - component: {fileID: 3733749650123612744}
+  - component: {fileID: 1609779818464464006}
   - component: {fileID: 2132496996}
   - component: {fileID: 2132496995}
   - component: {fileID: 154307573}
@@ -220,6 +221,19 @@ MonoBehaviour:
   cameraController: {fileID: 3733749650672025120}
   liftUp: {fileID: 2087312471}
   liftDown: {fileID: 1740207150}
+  mouseController: {fileID: 1609779818464464006}
+--- !u!114 &1609779818464464006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3733749650123612746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53ab6ec3728183946b1264349755b717, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!54 &2132496996
 Rigidbody:
   m_ObjectHideFlags: 0
