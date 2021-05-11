@@ -323,6 +323,14 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3733749650123612744, guid: 63518438abade5b49a6b2a28c3e5f35e, type: 3}
+      propertyPath: mouseSensitivity.x
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3733749650123612744, guid: 63518438abade5b49a6b2a28c3e5f35e, type: 3}
+      propertyPath: mouseSensitivity.y
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 3733749650123612746, guid: 63518438abade5b49a6b2a28c3e5f35e, type: 3}
       propertyPath: m_Name
       value: Player

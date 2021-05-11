@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BeanController : MonoBehaviour
-{   // ���ۿ� ���� Bean�� �����ϴ� ��ũ��Ʈ
+{  // this class is control the player's bean character. 
     [SerializeField]
     Bean bean;
     [SerializeField]
@@ -14,9 +14,8 @@ public class BeanController : MonoBehaviour
     Transform liftDown;
     Rigidbody rigidbody;
     Vector3 lastMousePosition;
-    
-    [SerializeField]
-    MouseLocker mouseController;
+    [SerializeField, Min(0.01f)]
+    Vector2 mouseSensitivity;
 
     public bool isInputable
     {
@@ -32,7 +31,7 @@ public class BeanController : MonoBehaviour
         isInputable = true;
         
         lastMousePosition = Input.mousePosition;
-        mouseController.HideMouse();
+        MouseLocker.HideMouse();
 
         OnGround = true;
         hand = false;
@@ -43,7 +42,9 @@ public class BeanController : MonoBehaviour
     {
         if (isInputable)
         {
-            RotateCamera();
+            if(MouseLocker.mouseLocked){                
+                RotateCamera();
+            }
             MovePlayerByInput();
             Interact();
         }
@@ -57,9 +58,9 @@ public class BeanController : MonoBehaviour
 
     void RotateCamera()
     {
-        Vector3 deltaMousePosition = Input.mousePosition - lastMousePosition; 
+        Vector3 deltaMousePosition = new Vector3(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"), 0);  //Input.mousePosition - lastMousePosition; 
         Vector3 cameraEular = cameraController.transform.rotation.eulerAngles;
-        float cameraEularX = cameraEular.x - deltaMousePosition.y;
+        float cameraEularX = cameraEular.x - deltaMousePosition.y * mouseSensitivity.y;
         if (cameraEularX < 180f)
         {
             cameraEularX = Mathf.Clamp(cameraEularX, -1f, 70.0f);
@@ -68,7 +69,7 @@ public class BeanController : MonoBehaviour
         {
             cameraEularX = Mathf.Clamp(cameraEularX, 355f, 361.0f);
         }
-        cameraController.transform.rotation = Quaternion.Euler(cameraEularX, cameraEular.y + deltaMousePosition.x, cameraEular.z);
+        cameraController.transform.rotation = Quaternion.Euler(cameraEularX, cameraEular.y + deltaMousePosition.x * mouseSensitivity.x, cameraEular.z);
         //Vector3 rotation = transform.rotation.eulerAngles;
         //transform.rotation = Quaternion.Euler(rotation.x, rotation.y + deltaMousePosition.x, rotation.z);
         lastMousePosition = Input.mousePosition;
@@ -83,10 +84,9 @@ public class BeanController : MonoBehaviour
         }
         bean.Movement = Input.GetAxisRaw("Horizontal") * cameraController.Right + Input.GetAxisRaw("Vertical") * cameraController.Forward;
         if(Input.GetKeyDown(KeyCode.LeftAlt)){
-            mouseController.ShowMouse();
+            MouseLocker.ShowMouse();
         }else if(Input.GetKeyUp(KeyCode.LeftAlt)){
-            mouseController.HideMouse();
-            lastMousePosition = Input.mousePosition;
+            MouseLocker.HideMouse();
         }
     }
 

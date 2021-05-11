@@ -4,21 +4,22 @@ using UnityEngine;
 
 public class MouseLocker : MonoBehaviour
 {
-    public static bool mouseLocked = false;
+    public static bool mouseLocked{ get; private set; } = false;
     // Update is called once per frame
     
-    public void ShowMouse(){
+    public static void ShowMouse(){
         if(mouseLocked) {
             Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-            mouseLocked = !mouseLocked;
+            //Cursor.visible = true;
+            mouseLocked = false;
         }
     }
 
-    public void HideMouse(){
+    public static void HideMouse(){
         if(!mouseLocked) {
             Cursor.lockState = CursorLockMode.Locked; 
-            mouseLocked = !mouseLocked;
+            //Cursor.visible = false;
+            mouseLocked = true;
         }
     }
 

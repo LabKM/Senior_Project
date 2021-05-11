@@ -221,7 +221,7 @@ MonoBehaviour:
   cameraController: {fileID: 3733749650672025120}
   liftUp: {fileID: 2087312471}
   liftDown: {fileID: 1740207150}
-  mouseController: {fileID: 1609779818464464006}
+  mouseSensitivity: {x: 8, y: 8}
 --- !u!114 &1609779818464464006
 MonoBehaviour:
   m_ObjectHideFlags: 0
