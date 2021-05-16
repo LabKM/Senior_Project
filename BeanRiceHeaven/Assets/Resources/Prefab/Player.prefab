@@ -487,6 +487,10 @@ PrefabInstance:
       value: Character_0
       objectReference: {fileID: 0}
     - target: {fileID: 4525449429480767757, guid: d763f63012c45e74c98149de6a955ec1, type: 3}
+      propertyPath: m_RootBone
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4525449429480767757, guid: d763f63012c45e74c98149de6a955ec1, type: 3}
       propertyPath: m_ProbeAnchor
       value: 
       objectReference: {fileID: 4083067872805581465}
