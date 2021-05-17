@@ -77,10 +77,11 @@ public class BeanController : MonoBehaviour
 
     void MovePlayerByInput()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && OnGround)
+        if (Input.GetKeyDown(KeyCode.Space) && OnGround && !hand)
         {
             bean.animator.SetTrigger("Jump");
             OnGround = false;
+
         }
         bean.Movement = Input.GetAxisRaw("Horizontal") * cameraController.Right + Input.GetAxisRaw("Vertical") * cameraController.Forward;
         if(Input.GetKeyDown(KeyCode.LeftAlt)){
@@ -108,9 +109,9 @@ public class BeanController : MonoBehaviour
         rigidbody.AddForce(Vector3.up * 225);
     }
 
-    public void OnSencer(string sencerName)
+    public void OnSencor(string sencorName)
     {
-        if(sencerName == "Foot")
+        if(sencorName == "Foot")
         {
             OnGround = true;
         }
