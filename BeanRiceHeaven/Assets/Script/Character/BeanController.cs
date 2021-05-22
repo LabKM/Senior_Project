@@ -49,6 +49,11 @@ public class BeanController : MonoBehaviour
             MovePlayerByInput();
             Interact();
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
     }
 
     private void LateUpdate()
