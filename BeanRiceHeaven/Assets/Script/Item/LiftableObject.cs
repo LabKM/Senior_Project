@@ -10,6 +10,7 @@ public class LiftableObject : MonoBehaviour, ILiftable
     MeshRenderer mesh;
     BeanController lifter;
     bool onHand;
+    List<BoxCollider> colliders;
 
     public void LeftShift(Transform _transform)
     {
@@ -18,14 +19,12 @@ public class LiftableObject : MonoBehaviour, ILiftable
         onHand = !onHand;
         if (onHand)
         {   
-            my_rigidbody.Sleep();
-            my_rigidbody.isKinematic = true;
+            PhysicsOff();
             transform.parent = _transform;
         }
         else
         {   
-            my_rigidbody.WakeUp();
-            my_rigidbody.isKinematic = false;
+            PhysicsOn();
             transform.parent = null;
         }
     }
@@ -57,10 +56,25 @@ public class LiftableObject : MonoBehaviour, ILiftable
     }
 
     void Start()
-    {
+    { 
+        colliders = new List<BoxCollider>(GetComponents<BoxCollider>());
         my_rigidbody = GetComponent<Rigidbody>();
         mesh = GetComponent<MeshRenderer>();
         lifter = null;
         onHand = false;
+    }
+
+    void PhysicsOff(){
+        colliders[0].enabled = false;
+        colliders[1].enabled = false;
+        my_rigidbody.isKinematic = true;
+        my_rigidbody.Sleep();
+    }
+
+    void PhysicsOn(){
+        colliders[0].enabled = true;
+        colliders[1].enabled = true;
+        my_rigidbody.WakeUp();
+        my_rigidbody.isKinematic = false;
     }
 }
