@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/Scenes/BackgroundTest.unity
+- path: Assets/Scenes/Light.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0
