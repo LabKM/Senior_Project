@@ -9,6 +9,7 @@ public class Sencer : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        bean.OnSencor(SencorName);
+        if(other.transform.name != bean.transform.name )
+            bean.OnSencor(SencorName);
     }
 }

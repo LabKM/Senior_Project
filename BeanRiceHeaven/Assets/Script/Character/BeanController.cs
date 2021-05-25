@@ -22,6 +22,7 @@ public class BeanController : MonoBehaviour
         set; get;
     }
     public bool OnGround { get; set; }
+    
     public bool hand{get; set;}
     public ILiftable liftObject { get; set; }
 
@@ -82,11 +83,9 @@ public class BeanController : MonoBehaviour
 
     void MovePlayerByInput()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && OnGround && !hand)
+        if (Input.GetKeyDown(KeyCode.Space) && OnGround )
         {
             bean.animator.SetTrigger("Jump");
-            OnGround = false;
-
         }
         bean.Movement = Input.GetAxisRaw("Horizontal") * cameraController.Right + Input.GetAxisRaw("Vertical") * cameraController.Forward;
         if(Input.GetKeyDown(KeyCode.LeftAlt)){
@@ -101,9 +100,11 @@ public class BeanController : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && liftObject != null) { 
             if(!hand){
                 hand = true;
+                bean.animator.SetBool("Hand", hand);
                 liftObject.LeftShift(liftUp);
             }else{
                 hand = false;
+                bean.animator.SetBool("Hand", hand);
                 liftObject.LeftShift(liftDown);
             }
         }
@@ -111,14 +112,16 @@ public class BeanController : MonoBehaviour
 
     public void Jump(float power)
     {
-        rigidbody.AddForce(Vector3.up * 225);
+        rigidbody.AddForce(Vector3.up * power);
+        OnGround = false;
     }
 
     public void OnSencor(string sencorName)
     {
-        if(sencorName == "Foot")
+        if(sencorName == "Foot" && !OnGround )
         {
             OnGround = true;
+            bean.animator.SetTrigger("Landing");
         }
     }
 }
