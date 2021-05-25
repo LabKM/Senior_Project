@@ -14,6 +14,9 @@ public class BeanRiceHeavenLobbyManager : MonoBehaviourPunCallbacks
 
     public GameObject joinButton;
     public Text connectionInfoText;
+    
+    [Tooltip("닉네임 관련 변수")]
+    public InputField nickNameInputField;
 
     private void Awake()
     {
@@ -31,6 +34,18 @@ public class BeanRiceHeavenLobbyManager : MonoBehaviourPunCallbacks
         
         connectionInfoText.text = "접속 시도중";
         connectionInfoText.color = Color.yellow;
+    }
+
+    void Update()
+    {
+        if (nickNameInputField.text.Length == 0)
+        {
+            joinButton.SetActive(false);
+        }
+        else
+        {
+            joinButton.SetActive(true);
+        }
     }
 
     void ChangeStateJoinButton(bool value)
@@ -57,7 +72,8 @@ public class BeanRiceHeavenLobbyManager : MonoBehaviourPunCallbacks
 
     public void OnJoinButtonClicked()
     {
-        int randomRoomName = Random.Range(0, 10000);
+        //int randomRoomName = Random.Range(0, 10000);
+        int randomRoomName = 1;
         RoomOptions roomOptions = new RoomOptions() { IsOpen = true, IsVisible = true, MaxPlayers = 4};
         PhotonNetwork.JoinOrCreateRoom("Room" + randomRoomName, roomOptions, TypedLobby.Default);
     }
@@ -82,7 +98,8 @@ public class BeanRiceHeavenLobbyManager : MonoBehaviourPunCallbacks
         
         connectionInfoText.text = "방 접속";
         connectionInfoText.color = Color.green;
+        PhotonNetwork.NickName = nickNameInputField.text;
         
-        PhotonNetwork.LoadLevel("Light");
+        PhotonNetwork.LoadLevel("MatchMakingRoomScene");
     }
 }

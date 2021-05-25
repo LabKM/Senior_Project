@@ -3,6 +3,8 @@ ScriptsOnlyBuild:
     Assembly-CSharp.dll:
     - Bean
     - BeanController
+    - BeanRiceHeavenLobbyManager
+    - BeanRiceHeavenRoomManager
     - CameraController
     - Door
     - Guard
@@ -43,12 +45,18 @@ ScriptsOnlyBuild:
     - UnityEditor.TestTools.TestRunner.TestListCacheData
     - UnityEditor.TestTools.TestRunner.TestRun.TestJobDataHolder
     UnityEngine.UI.dll:
+    - UnityEngine.EventSystems.EventSystem
+    - UnityEngine.EventSystems.StandaloneInputModule
+    - UnityEngine.UI.Button
+    - UnityEngine.UI.CanvasScaler
+    - UnityEngine.UI.GraphicRaycaster
     - UnityEngine.UI.Image
+    - UnityEngine.UI.InputField
     - UnityEngine.UI.Shadow
     - UnityEngine.UI.Slider
     - UnityEngine.UI.Text
   sceneClasses:
-    Assets/Scenes/Light.unity:
+    Assets/Scenes/LobbyScene.unity:
     - Class: 1
       Script: {instanceID: 0}
     - Class: 4
@@ -132,17 +140,31 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 2862}
     - Class: 114
+      Script: {instanceID: 2966}
+    - Class: 114
+      Script: {instanceID: 3184}
+    - Class: 114
+      Script: {instanceID: 3346}
+    - Class: 114
       Script: {instanceID: 3400}
     - Class: 114
       Script: {instanceID: 3418}
     - Class: 114
-      Script: {instanceID: 3642}
+      Script: {instanceID: 3442}
     - Class: 114
-      Script: {instanceID: 3808}
+      Script: {instanceID: 3526}
     - Class: 114
-      Script: {instanceID: 3822}
+      Script: {instanceID: 3644}
     - Class: 114
-      Script: {instanceID: 4124}
+      Script: {instanceID: 3810}
+    - Class: 114
+      Script: {instanceID: 3824}
+    - Class: 114
+      Script: {instanceID: 3850}
+    - Class: 114
+      Script: {instanceID: 3976}
+    - Class: 114
+      Script: {instanceID: 4126}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -167,11 +189,76 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 222
       Script: {instanceID: 0}
+    - Class: 223
+      Script: {instanceID: 0}
     - Class: 224
       Script: {instanceID: 0}
     - Class: 225
       Script: {instanceID: 0}
     - Class: 850595691
+      Script: {instanceID: 0}
+    Assets/Scenes/MatchMakingRoomScene.unity:
+    - Class: 1
+      Script: {instanceID: 0}
+    - Class: 4
+      Script: {instanceID: 0}
+    - Class: 20
+      Script: {instanceID: 0}
+    - Class: 21
+      Script: {instanceID: 0}
+    - Class: 28
+      Script: {instanceID: 0}
+    - Class: 43
+      Script: {instanceID: 0}
+    - Class: 48
+      Script: {instanceID: 0}
+    - Class: 74
+      Script: {instanceID: 0}
+    - Class: 81
+      Script: {instanceID: 0}
+    - Class: 89
+      Script: {instanceID: 0}
+    - Class: 90
+      Script: {instanceID: 0}
+    - Class: 91
+      Script: {instanceID: 0}
+    - Class: 95
+      Script: {instanceID: 0}
+    - Class: 104
+      Script: {instanceID: 0}
+    - Class: 108
+      Script: {instanceID: 0}
+    - Class: 114
+      Script: {instanceID: 1442}
+    - Class: 114
+      Script: {instanceID: 1444}
+    - Class: 114
+      Script: {instanceID: 2966}
+    - Class: 114
+      Script: {instanceID: 3442}
+    - Class: 114
+      Script: {instanceID: 3486}
+    - Class: 114
+      Script: {instanceID: 3810}
+    - Class: 114
+      Script: {instanceID: 3824}
+    - Class: 115
+      Script: {instanceID: 0}
+    - Class: 128
+      Script: {instanceID: 0}
+    - Class: 137
+      Script: {instanceID: 0}
+    - Class: 157
+      Script: {instanceID: 0}
+    - Class: 196
+      Script: {instanceID: 0}
+    - Class: 213
+      Script: {instanceID: 0}
+    - Class: 222
+      Script: {instanceID: 0}
+    - Class: 223
+      Script: {instanceID: 0}
+    - Class: 224
       Script: {instanceID: 0}
   scriptHashData:
   - hash:
@@ -1196,7 +1283,7 @@ ScriptsOnlyBuild:
     className: LobbyTopPanel
   - hash:
       serializedVersion: 2
-      Hash: 681cd305079eae411b910e391c0cab35
+      Hash: cdd807d8ebda6537267d93c942af27aa
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: BeanRiceHeavenLobbyManager
@@ -1272,6 +1359,12 @@ ScriptsOnlyBuild:
     assemblyName: PhotonUnityNetworking.Demos.dll
     namespaceName: Photon.Pun.Demo.PunBasics
     className: LoaderAnime
+  - hash:
+      serializedVersion: 2
+      Hash: 3fa205813bba54dc32ad0b1db13d58dc
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: BeanRiceHeavenRoomManager
   - hash:
       serializedVersion: 2
       Hash: e37675de1ea5e56da90f5600d33587bd
@@ -1580,5 +1673,6 @@ ScriptsOnlyBuild:
     className: UserIdUiForm
   platform: 19
   scenePathNames:
-  - Assets/Scenes/Light.unity
-  playerPath: C:/Users/user/Desktop/KongBabHeaven/BeanRiceHeaven.exe
+  - Assets/Scenes/LobbyScene.unity
+  - Assets/Scenes/MatchMakingRoomScene.unity
+  playerPath: C:/Users/user/Desktop/PhotonTest1/BeanRiceHeaven.exe
