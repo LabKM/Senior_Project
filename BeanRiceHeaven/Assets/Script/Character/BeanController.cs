@@ -16,6 +16,8 @@ public class BeanController : MonoBehaviour
     Vector3 lastMousePosition;
     [SerializeField, Min(0.01f)]
     Vector2 mouseSensitivity;
+    [SerializeField, Min(0.01f)]
+    float MouseWheelZoomLevel = 1.0f;
 
     public bool isInputable
     {
@@ -46,6 +48,7 @@ public class BeanController : MonoBehaviour
             if(MouseLocker.mouseLocked){                
                 RotateCamera();
             }
+            ZoomInOut();
             MovePlayerByInput();
             Interact();
         }
@@ -60,6 +63,13 @@ public class BeanController : MonoBehaviour
     {
         transform.position = bean.transform.position;
         bean.transform.position = transform.position;
+    }
+    
+    private void ZoomInOut(){
+        float wheelInput = Input.GetAxis("Mouse ScrollWheel");
+        if(wheelInput != 0){
+            cameraController.Distance = cameraController.Distance - wheelInput * MouseWheelZoomLevel;
+        }
     }
 
     void RotateCamera()

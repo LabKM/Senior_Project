@@ -197,7 +197,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1003355331, guid: 63518438abade5b49a6b2a28c3e5f35e, type: 3}
       propertyPath: m_LocalPosition.y
+<<<<<<< Updated upstream
       value: -0.013
+=======
+      value: -0.017
+>>>>>>> Stashed changes
       objectReference: {fileID: 0}
     - target: {fileID: 1003355333, guid: 63518438abade5b49a6b2a28c3e5f35e, type: 3}
       propertyPath: SencorName
@@ -265,7 +269,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3733749650672025120, guid: 63518438abade5b49a6b2a28c3e5f35e, type: 3}
       propertyPath: Distance
-      value: 1
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3733749650672025120, guid: 63518438abade5b49a6b2a28c3e5f35e, type: 3}
+      propertyPath: CameraDistanceMinMax.x
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3733749650672025120, guid: 63518438abade5b49a6b2a28c3e5f35e, type: 3}
+      propertyPath: CameraDistanceMinMax.y
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3743807323550988616, guid: 63518438abade5b49a6b2a28c3e5f35e, type: 3}
       propertyPath: m_SynchronizeLayers.Array.size
