@@ -195,6 +195,10 @@ PrefabInstance:
       propertyPath: ObservedComponents.Array.size
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1003355331, guid: 63518438abade5b49a6b2a28c3e5f35e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.006
+      objectReference: {fileID: 0}
     - target: {fileID: 1003355333, guid: 63518438abade5b49a6b2a28c3e5f35e, type: 3}
       propertyPath: SencorName
       value: Foot
