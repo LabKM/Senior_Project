@@ -5,7 +5,14 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     [SerializeField]
-    float Distance;
+    float CameraDistanceFromTarget = 1.0f;
+    [SerializeField]
+    Vector2 CameraDistanceMinMax = new Vector2(0.2f, 3.0f);
+    public float Distance{ 
+        get{ return CameraDistanceFromTarget; } 
+        set{ CameraDistanceFromTarget = Mathf.Clamp(value, CameraDistanceMinMax.x, CameraDistanceMinMax.y );
+            childCamera.transform.position = transform.position + transform.forward * CameraDistanceFromTarget * -1;}
+        } 
     [SerializeField]
     Vector2 Sensitivity;
     public Vector3 Right { get { return Vector3.Cross(Vector3.up, transform.forward); } }
@@ -20,17 +27,6 @@ public class CameraController : MonoBehaviour
         {
             Debug.LogError("Need Child Camera Object");
         }
-        childCamera.transform.position = transform.position + transform.forward * Distance * -1;
-    }
-
-    private void Update()
-    {
-        
-    }
-
-    public void ResetDistance(float _distance)
-    {
-        Distance = _distance;
         childCamera.transform.position = transform.position + transform.forward * Distance * -1;
     }
 }

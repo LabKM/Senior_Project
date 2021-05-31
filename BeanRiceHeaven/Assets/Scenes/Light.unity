@@ -38,7 +38,11 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
+<<<<<<< HEAD
   m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+=======
+  m_IndirectSpecularColor: {r: 0.4423425, g: 0.49138868, b: 0.5712612, a: 1}
+>>>>>>> dc60108f8fa33be2cefb1d501ea52bd79f4d9d5c
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -197,7 +201,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1003355331, guid: 63518438abade5b49a6b2a28c3e5f35e, type: 3}
       propertyPath: m_LocalPosition.y
+<<<<<<< HEAD
       value: -0.006
+=======
+      value: -0.017
+>>>>>>> dc60108f8fa33be2cefb1d501ea52bd79f4d9d5c
       objectReference: {fileID: 0}
     - target: {fileID: 1003355333, guid: 63518438abade5b49a6b2a28c3e5f35e, type: 3}
       propertyPath: SencorName
@@ -265,7 +273,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3733749650672025120, guid: 63518438abade5b49a6b2a28c3e5f35e, type: 3}
       propertyPath: Distance
-      value: 1
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3733749650672025120, guid: 63518438abade5b49a6b2a28c3e5f35e, type: 3}
+      propertyPath: CameraDistanceMinMax.x
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3733749650672025120, guid: 63518438abade5b49a6b2a28c3e5f35e, type: 3}
+      propertyPath: CameraDistanceMinMax.y
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3743807323550988616, guid: 63518438abade5b49a6b2a28c3e5f35e, type: 3}
       propertyPath: m_SynchronizeLayers.Array.size
