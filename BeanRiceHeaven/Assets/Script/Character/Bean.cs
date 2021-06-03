@@ -16,7 +16,7 @@ public class Bean : LivingEntity
         Application.targetFrameRate = 60;
     }
 
-    public override void Start()
+    protected override void Start()
     {
         base.Start();
         behavior = null;

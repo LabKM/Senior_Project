@@ -12,7 +12,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
     public float hp { protected set; get; }
     public bool dead { protected set; get; }
 
-    public virtual void Start()
+    protected virtual void Start()
     {
         hp = MaxHp;
     }
