@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1003355330}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.015000001, z: 0}
+  m_LocalPosition: {x: 0, y: -0.0289, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5486654780340735832}
@@ -58,7 +58,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bean: {fileID: 3733749650123612744}
-  SencorName: 
+  SencorName: Foot
 --- !u!1 &1740207149
 GameObject:
   m_ObjectHideFlags: 0
@@ -163,7 +163,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93277a5b601899341a4af91f2172c4e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Distance: 1.5
+  CameraDistanceFromTarget: 1
+  CameraDistanceMinMax: {x: 0.2, y: 3}
   Sensitivity: {x: 1, y: 0}
 --- !u!1 &3733749650123612746
 GameObject:
@@ -221,6 +222,7 @@ MonoBehaviour:
   liftUp: {fileID: 2087312471}
   liftDown: {fileID: 1740207150}
   mouseSensitivity: {x: 8, y: 8}
+  MouseWheelZoomLevel: 1
 --- !u!114 &1609779818464464006
 MonoBehaviour:
   m_ObjectHideFlags: 0
