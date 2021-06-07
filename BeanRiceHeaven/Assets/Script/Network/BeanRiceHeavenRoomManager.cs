@@ -17,7 +17,7 @@ public class BeanRiceHeavenRoomManager : MonoBehaviourPunCallbacks
 
     [Header("Player Prefab")] 
     public GameObject roomPlayerPrefab;
-    
+
     void Awake()
     {
         currRoomNameText.text = PhotonNetwork.CurrentRoom.Name;
@@ -34,6 +34,10 @@ public class BeanRiceHeavenRoomManager : MonoBehaviourPunCallbacks
             if (!Equals(p, PhotonNetwork.LocalPlayer))
             {
                 entryPlayerNickname.color = new Color32(176, 59, 69, 255);
+            }
+            else
+            {
+                
             }
         }
     }
@@ -55,4 +59,6 @@ public class BeanRiceHeavenRoomManager : MonoBehaviourPunCallbacks
         Debug.Log("call");
         int i = 0;
     }
+    
+    
 }
