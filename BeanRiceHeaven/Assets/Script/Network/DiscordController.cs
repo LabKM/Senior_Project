@@ -100,18 +100,14 @@ namespace Script.Network
             
             activityManager.UpdateActivity(activity, result =>
             {
-               Debug.Log("Discord Result: " + result);
+               //Debug.Log("Discord Result: " + result);
             });
         }
 
-        private void OnApplicationQuit()
-        {
-            discord.Dispose();
-        }
-        
-        private void OnDestroy()
-        {
-            discord.Dispose();
-        }
+    void OnDisable()
+    {
+        Debug.Log("Discord: shutdown");
+        discord.Dispose();
+    }
     }
 }
