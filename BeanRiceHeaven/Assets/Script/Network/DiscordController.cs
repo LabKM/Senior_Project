@@ -12,6 +12,7 @@ namespace Script.Network
         public static DiscordController instance;
 
         private const string _applicationId = "817277716498743337";
+        private const string _partyId = "ae488379-351d-4a4f-ad32-2b9b01c91657";
         private static string _version { get { return Application.unityVersion; } }
         private static string _projectName { get { return Application.productName; } }
         private static string _activeSceneName { get { return SceneManager.GetActiveScene().name; } }
@@ -85,6 +86,7 @@ namespace Script.Network
             else if (BeanRiceHeavenLobbyManager.Instance.roomPanel.activeSelf)
             {
                 currSceneState = "매칭 중";
+                                
                activity.Party = new PartySize
                {
                    CurrentSize = PhotonNetwork.CurrentRoom.PlayerCount,
