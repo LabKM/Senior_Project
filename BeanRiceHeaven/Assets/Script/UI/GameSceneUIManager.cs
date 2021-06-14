@@ -31,9 +31,11 @@ public class GameSceneUIManager : MonoBehaviour
             float wheelInput = Input.GetAxis("Mouse ScrollWheel");
             if(MapUI.activeSelf && wheelInput != 0){
                 if(wheelInput > 0){
-                    
+                    MapUI.transform.Find("Floor1").gameObject.SetActive(true);
+                    MapUI.transform.Find("Floor2").gameObject.SetActive(false);
                 }else{
-
+                    MapUI.transform.Find("Floor1").gameObject.SetActive(false);
+                    MapUI.transform.Find("Floor2").gameObject.SetActive(true);
                 }
             }
         }
