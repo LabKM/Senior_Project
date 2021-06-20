@@ -4,7 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 
 public class Door2 : MonoBehaviour
-{
+{   
     Transform RightDoor;
     Transform LeftDoor;
 
@@ -13,6 +13,8 @@ public class Door2 : MonoBehaviour
     float secForOpenning = 1.0f;
     bool Opening;
     bool moving;
+
+    public bool locked { get; set;}
 
     void Awake(){
         RightDoor = transform.Find("Box060");
@@ -30,7 +32,7 @@ public class Door2 : MonoBehaviour
     }
 
     void OnTriggerEnter(Collider collider){
-        if (!Opening && !moving)
+        if (!Opening && !moving && !locked)
         {
             RightDoor.DOScaleX(0.0f, secForOpenning);
             LeftDoor.DOScaleX(0.0f, secForOpenning);
