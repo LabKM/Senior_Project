@@ -74,7 +74,6 @@ public class Room : MonoBehaviour
     public void SetDoorStyle(bool east, bool west, bool south, bool north){
         List<bool> offsetRequest = new List<bool>(){ east, west, south, north };
         for(int i = 0; i < doors.Count; ++i){
-            doors[i].Find("Door").gameObject.SetActive(offsetRequest[i]);
             doors[i].Find("Wall").gameObject.SetActive(!offsetRequest[i]);
         }
     }

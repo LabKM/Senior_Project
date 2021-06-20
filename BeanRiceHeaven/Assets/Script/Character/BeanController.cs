@@ -54,7 +54,7 @@ public class BeanController : MonoBehaviour
             Interact();
             
             if(OnGround){
-                Vector3 vel = Movement * bean.MoveSpeed * (Input.GetKey(KeyCode.LeftShift) ? 2.5f : 1);
+                Vector3 vel = Movement.normalized * bean.MoveSpeed * (Input.GetKey(KeyCode.LeftShift) ? 2.5f : 1);
                 vel.y = rigidbody.velocity.y;
                 rigidbody.velocity = vel;
             }
@@ -129,8 +129,13 @@ public class BeanController : MonoBehaviour
 
     public void Jump(float power)
     {
-        rigidbody.AddForce(Vector3.up * power / 2);
+        rigidbody.AddForce(Vector3.up * power * 0.6f);
         OnGround = false;
+    }
+
+    public void Landing(){
+        OnGround = true;
+        bean.animator.SetTrigger("Landing");
     }
 
     public void OnSencor(string sencorName)
