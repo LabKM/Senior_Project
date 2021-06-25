@@ -18,6 +18,7 @@ public class BeanController : MonoBehaviour
     Vector2 mouseSensitivity;
     [SerializeField, Min(0.01f)]
     float MouseWheelZoomLevel = 1.0f;
+    Vector3 Movement;
 
     public bool isInputable
     {
@@ -51,6 +52,12 @@ public class BeanController : MonoBehaviour
             ZoomInOut();
             MovePlayerByInput();
             Interact();
+            
+            if(OnGround){
+                Vector3 vel = Movement.normalized * bean.MoveSpeed * (Input.GetKey(KeyCode.LeftShift) ? 2.5f : 1);
+                vel.y = rigidbody.velocity.y;
+                rigidbody.velocity = vel;
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -61,8 +68,8 @@ public class BeanController : MonoBehaviour
 
     private void LateUpdate()
     {
-        transform.position = bean.transform.position;
-        bean.transform.position = transform.position;
+        // transform.position = bean.transform.position;
+        // bean.transform.position = transform.position;
     }
     
     private void ZoomInOut(){
@@ -97,7 +104,7 @@ public class BeanController : MonoBehaviour
         {
             bean.animator.SetTrigger("Jump");
         }
-        bean.Movement = Input.GetAxisRaw("Horizontal") * cameraController.Right + Input.GetAxisRaw("Vertical") * cameraController.Forward;
+        Movement = bean.Movement = Input.GetAxisRaw("Horizontal") * cameraController.Right + Input.GetAxisRaw("Vertical") * cameraController.Forward;
         if(Input.GetKeyDown(KeyCode.LeftAlt)){
             MouseLocker.ShowMouse();
         }else if(Input.GetKeyUp(KeyCode.LeftAlt)){
@@ -122,8 +129,13 @@ public class BeanController : MonoBehaviour
 
     public void Jump(float power)
     {
-        rigidbody.AddForce(Vector3.up * power);
+        rigidbody.AddForce(Vector3.up * power * 0.6f);
         OnGround = false;
+    }
+
+    public void Landing(){
+        OnGround = true;
+        bean.animator.SetTrigger("Landing");
     }
 
     public void OnSencor(string sencorName)

@@ -33,9 +33,10 @@ public class Bean : LivingEntity
         bool run = Input.GetKey(KeyCode.LeftShift);
         move_vector_normal = move_vector_normal.normalized;
         transform.LookAt(Movement + transform.position);
-        transform.Translate(Vector3.forward * MoveSpeed * Time.deltaTime * (Movement.sqrMagnitude > 0 ? 1 : 0) * (run ? 2.5f : 1));
+        //transform.Translate(Vector3.forward * MoveSpeed * Time.deltaTime * (Movement.sqrMagnitude > 0 ? 1 : 0) * (run ? 2.5f : 1));
         animator.SetFloat("Walk", move_vector_normal.sqrMagnitude);
         animator.SetBool("Run", run);
+        
         Movement = Vector3.zero;
     }
 

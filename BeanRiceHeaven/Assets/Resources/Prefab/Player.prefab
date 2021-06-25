@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1003355331}
   - component: {fileID: 1003355332}
   - component: {fileID: 1003355333}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FootSencer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26,10 +26,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1003355330}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.0289, z: 0}
+  m_LocalPosition: {x: 0, y: -0.022, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 5486654780340735832}
+  m_Father: {fileID: 3733749650123612747}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1003355332
@@ -43,7 +43,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.2, y: 0.05, z: 0.1}
+  m_Size: {x: 0.2, y: 0.05, z: 0.15}
   m_Center: {x: 0, y: 0.025, z: 0}
 --- !u!114 &1003355333
 MonoBehaviour:
@@ -143,14 +143,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3451463881494438117}
-  m_LocalRotation: {x: -0.08715578, y: 0, z: 0, w: 0.9961947}
-  m_LocalPosition: {x: 0, y: 0.685, z: -0.015}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.507, z: -0.015}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3733749650326059288}
   m_Father: {fileID: 3733749650123612747}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -10, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3733749650672025120
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -198,10 +198,11 @@ Transform:
   m_GameObject: {fileID: 3733749650123612746}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 7274731270164440362}
   - {fileID: 5486654780340735832}
+  - {fileID: 1003355331}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -304,7 +305,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 3743807323550988616}
-  sceneViewId: 0
+  sceneViewId: 1
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &3743807323550988616
@@ -439,7 +440,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHp: 0
   animator: {fileID: 154307573}
-  MoveSpeed: 1
+  MoveSpeed: 0.7
 --- !u!1001 &5453360011232536755
 PrefabInstance:
   m_ObjectHideFlags: 0

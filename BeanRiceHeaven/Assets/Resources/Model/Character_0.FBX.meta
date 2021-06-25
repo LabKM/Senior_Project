@@ -76,8 +76,8 @@ ModelImporter:
       name: Stand00
       takeName: Take 001
       internalID: 0
-      firstFrame: 0
-      lastFrame: 40
+      firstFrame: 41
+      lastFrame: 81
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -392,6 +392,13 @@ ModelImporter:
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 226
+        intParameter: 0
+        messageOptions: 0
+      - time: 1
+        functionName: Landing
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
         intParameter: 0
         messageOptions: 0
       transformMask: []
