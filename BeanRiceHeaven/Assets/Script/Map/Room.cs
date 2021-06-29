@@ -7,7 +7,7 @@ public class Room : MonoBehaviour
     public enum DoorPoint{  East, West, South, North };   
 
     public enum Style{
-        Room00, Room01, Room02, Room03, Room04, Room05, Room06
+        Room00, Room01, Room02, Room03, Room04, Room05
     //  다 닫힌, 입구하나, 직선, 입구3개, 다 열림, 입구 2개 위옆, 입구 2개 위옆 
     };
 
@@ -41,34 +41,34 @@ public class Room : MonoBehaviour
     // 011
     // 010
 
-    // room06
-    // 010
-    // 011
-    // 000
-
     Style m_style;
 
     public List<Transform> doors; // 동(x+) 서(x-) 남(z-) 북(z+) 순서
 
     public void SetRoomStyle(Style roomStyle){
         m_style = roomStyle;
+        GameObject prefab_roomset = null;
         switch(m_style){
             case Style.Room00:
-                //Test Or Bug
                 break;
-            case Style.Room01:                
+            case Style.Room01:  
+                prefab_roomset = Resources.Load<GameObject>("Map2/Room01/Room01Set0");
                 break;
             case Style.Room02:
+                prefab_roomset = Resources.Load<GameObject>("Map2/Room02/Room02Set0");
                 break;
             case Style.Room03:
+                prefab_roomset = Resources.Load<GameObject>("Map2/Room03/Room03Set0");
                 break;
             case Style.Room04:
                 break;
             case Style.Room05:
                 break;
-            case Style.Room06:
-                break;
         }
+        if(prefab_roomset == null)
+            return;
+        GameObject instance_roomset = Instantiate<GameObject>(prefab_roomset, transform.position, transform.rotation);
+        instance_roomset.transform.parent = transform;
     }
 
     public void SetDoorStyle(bool east, bool west, bool south, bool north){
@@ -76,5 +76,29 @@ public class Room : MonoBehaviour
         for(int i = 0; i < doors.Count; ++i){
             doors[i].Find("Wall").gameObject.SetActive(!offsetRequest[i]);
         }
+        if(!east && !west && !south && !north){
+            m_style = Style.Room00;
+        }else if((!east && !west && !south && north)
+        || (!east && !west && south && !north)
+        || (east && !west && !south && !north)
+        || (!east && west && !south && !north)){
+            m_style = Style.Room01;
+        }else if((east && west && south && north)
+        || (east && west && !south && !north)){
+            m_style = Style.Room02;
+        }else if((!east && west && south && north)
+        || (east && !west && south && north)
+        || (east && west && !south && north)
+        || (east && west && south && !north)){
+            m_style = Style.Room03;
+        }else if(east && west && south && north){
+            m_style = Style.Room04;
+        }else if((!east && west && !south && north)
+        || (!east && west && south && !north)
+        || (east && !west && !south && north)
+        || (east && !west && south && !north)){
+            m_style = Style.Room05;
+        }
+        SetRoomStyle(m_style);
     }
 }
