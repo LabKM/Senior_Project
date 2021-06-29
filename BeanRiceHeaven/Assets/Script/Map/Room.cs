@@ -37,13 +37,15 @@ public class Room : MonoBehaviour
     // 010
 
     // room05
-    // 000
-    // 011
     // 010
+    // 110
+    // 000
 
     Style m_style;
 
     public List<Transform> doors; // 동(x+) 서(x-) 남(z-) 북(z+) 순서
+
+    Quaternion room_rotation;
 
     public void SetRoomStyle(Style roomStyle){
         m_style = roomStyle;
@@ -52,22 +54,24 @@ public class Room : MonoBehaviour
             case Style.Room00:
                 break;
             case Style.Room01:  
-                prefab_roomset = Resources.Load<GameObject>("Map2/Room01/Room01Set0");
+                prefab_roomset = Resources.Load<GameObject>("Map2/Room01/Room01Set"+((int)Random.Range(0.0f, 2.9f)).ToString());
                 break;
             case Style.Room02:
-                prefab_roomset = Resources.Load<GameObject>("Map2/Room02/Room02Set0");
+                prefab_roomset = Resources.Load<GameObject>("Map2/Room02/Room02Set"+((int)Random.Range(0.0f, 2.9f)).ToString());
                 break;
             case Style.Room03:
-                prefab_roomset = Resources.Load<GameObject>("Map2/Room03/Room03Set0");
+                prefab_roomset = Resources.Load<GameObject>("Map2/Room03/Room03Set" + ((int)Random.Range(0.0f, 2.9f)).ToString());
                 break;
             case Style.Room04:
+                prefab_roomset = Resources.Load<GameObject>("Map2/Room04/Room04Set" + ((int)Random.Range(0.0f, 2.9f)).ToString());
                 break;
             case Style.Room05:
+                prefab_roomset = Resources.Load<GameObject>("Map2/Room05/Room05Set" + ((int)Random.Range(0.0f, 2.9f)).ToString());
                 break;
         }
         if(prefab_roomset == null)
             return;
-        GameObject instance_roomset = Instantiate<GameObject>(prefab_roomset, transform.position, transform.rotation);
+        GameObject instance_roomset = Instantiate<GameObject>(prefab_roomset, transform.position, room_rotation);
         instance_roomset.transform.parent = transform;
     }
 
@@ -76,28 +80,67 @@ public class Room : MonoBehaviour
         for(int i = 0; i < doors.Count; ++i){
             doors[i].Find("Wall").gameObject.SetActive(!offsetRequest[i]);
         }
-        if(!east && !west && !south && !north){
-            m_style = Style.Room00;
-        }else if((!east && !west && !south && north)
-        || (!east && !west && south && !north)
-        || (east && !west && !south && !north)
-        || (!east && west && !south && !north)){
-            m_style = Style.Room01;
-        }else if((east && west && south && north)
-        || (east && west && !south && !north)){
-            m_style = Style.Room02;
-        }else if((!east && west && south && north)
-        || (east && !west && south && north)
-        || (east && west && !south && north)
-        || (east && west && south && !north)){
-            m_style = Style.Room03;
-        }else if(east && west && south && north){
-            m_style = Style.Room04;
-        }else if((!east && west && !south && north)
-        || (!east && west && south && !north)
-        || (east && !west && !south && north)
-        || (east && !west && south && !north)){
-            m_style = Style.Room05;
+        int numOfDoor = (east ? 1 : 0) + (west ? 1 : 0) + (south ? 1 : 0) + (north ? 1 : 0) ;
+        switch(numOfDoor){
+            case 0:
+                 m_style = Style.Room00;
+                break;
+            case 1:
+                if(!east && !west && !south && north){ // ewsN
+                    m_style = Style.Room01;
+                    room_rotation = Quaternion.Euler(0, 180, 0);
+                }else if (!east && !west && south && !north){ // ewSn
+                    m_style = Style.Room01;
+                    room_rotation = Quaternion.Euler(0, 0, 0);
+                }else if (east && !west && !south && !north) { // Ewsn
+                    m_style = Style.Room01;
+                    room_rotation = Quaternion.Euler(0, 90, 0);
+                }else if (!east && west && !south && !north){
+                    m_style = Style.Room01;
+                    room_rotation = Quaternion.Euler(0, 270, 0);
+                }
+                break;
+            case 2:
+                if(!east && !west && south && north){
+                    m_style = Style.Room02;
+                }else if(east && west && !south && !north){
+                    m_style = Style.Room02;
+                    room_rotation = Quaternion.Euler(0, 90, 0);
+                }else{
+                    if(!east && west && !south && north){
+                        m_style = Style.Room05;
+                    }
+                    else if (!east && west && south && !north){
+                        m_style = Style.Room05;
+                        room_rotation = Quaternion.Euler(0, 270, 0);
+                    }
+                    else if (east && !west && !south && north){
+                        m_style = Style.Room05;
+                        room_rotation = Quaternion.Euler(0, 90, 0);
+                    }
+                    else if (east && !west && south && !north){
+                        m_style = Style.Room05;
+                        room_rotation = Quaternion.Euler(0, 180, 0);
+                    }
+                }
+                break;
+            case 3:
+                if(!east && west && south && north){
+                    m_style = Style.Room03;
+                    room_rotation = Quaternion.Euler(0, 180, 0);
+                }else if(east && !west && south && north){
+                    m_style = Style.Room03;
+                }else if(east && west && !south && north){
+                    m_style = Style.Room03;
+                    room_rotation = Quaternion.Euler(0, 270, 0);
+                }else if(east && west && south && !north){
+                    m_style = Style.Room03;
+                    room_rotation = Quaternion.Euler(0, 90, 0);
+                }
+                break;
+            case 4:
+                m_style = Style.Room04;
+                break;
         }
         SetRoomStyle(m_style);
     }
