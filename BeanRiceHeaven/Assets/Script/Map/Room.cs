@@ -57,16 +57,30 @@ public class Room : MonoBehaviour
             switch(m_style){
                 case Style.Room00:
                     break;
-                case Style.Room01:  
+                case Style.Room01:
+                    prefab_roomset = Resources.Load<GameObject>("Map2/Room01/Room11Set"+((int)Random.Range(0.0f, 2.9f)).ToString());
+                    Instantiate<GameObject>(prefab_roomset, transform.position, room_rotation).transform.parent = transform;
+                    prefab_roomset = Resources.Load<GameObject>("Prefab/Map2/Room11");  
                     break;
                 case Style.Room02:
-                    prefab_roomset = Resources.Load<GameObject>("Prefab/Map2/Room11");
+                    prefab_roomset = Resources.Load<GameObject>("Map2/Room02/Room12Set"+((int)Random.Range(0.0f, 2.9f)).ToString());
+                    Instantiate<GameObject>(prefab_roomset, transform.position, room_rotation).transform.parent = transform;
+                    prefab_roomset = Resources.Load<GameObject>("Prefab/Map2/Room12");  
                     break;
                 case Style.Room03:
+                    prefab_roomset = Resources.Load<GameObject>("Map2/Room03/Room13Set"+((int)Random.Range(0.0f, 2.9f)).ToString());
+                    Instantiate<GameObject>(prefab_roomset, transform.position, room_rotation).transform.parent = transform;
+                    prefab_roomset = Resources.Load<GameObject>("Prefab/Map2/Room13");  
                     break;
                 case Style.Room04:
+                    prefab_roomset = Resources.Load<GameObject>("Map2/Room04/Room14Set"+((int)Random.Range(0.0f, 2.9f)).ToString());
+                    Instantiate<GameObject>(prefab_roomset, transform.position, room_rotation).transform.parent = transform;
+                    prefab_roomset = Resources.Load<GameObject>("Prefab/Map2/Room14");  
                     break;
                 case Style.Room05:
+                    prefab_roomset = Resources.Load<GameObject>("Map2/Room05/Room15Set"+((int)Random.Range(0.0f, 2.9f)).ToString());
+                    Instantiate<GameObject>(prefab_roomset, transform.position, room_rotation).transform.parent = transform;
+                    prefab_roomset = Resources.Load<GameObject>("Prefab/Map2/Room15");  
                     break;
             }
         }else{
@@ -115,10 +129,10 @@ public class Room : MonoBehaviour
                     room_rotation = Quaternion.Euler(0, 0, 0);
                 }else if (east && !west && !south && !north) { // Ewsn
                     m_style = Style.Room01;
-                    room_rotation = Quaternion.Euler(0, 90, 0);
+                    room_rotation = Quaternion.Euler(0, 270, 0);
                 }else if (!east && west && !south && !north){
                     m_style = Style.Room01;
-                    room_rotation = Quaternion.Euler(0, 270, 0);
+                    room_rotation = Quaternion.Euler(0, 90, 0);
                 }
                 break;
             case 2:
