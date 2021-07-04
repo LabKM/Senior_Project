@@ -183,6 +183,7 @@ public class MapGenerator : MonoBehaviour
                     Vector3 obstaclePos = CoordToVector(randomCoord.x, randomCoord.y);
                     GameObject newObstacle = Instantiate<GameObject>(RoomPrefab, obstaclePos, Quaternion.identity);
                     roomMap[randomCoord.x, randomCoord.y] = newObstacle.GetComponent<Room>();
+                    roomMap[randomCoord.x, randomCoord.y].hallway = false;
                     roomMap[randomCoord.x, randomCoord.y].SetDoorStyle(
                         !unassessableFlag[wayCenter.x + 1, wayCenter.y], 
                         !unassessableFlag[wayCenter.x - 1, wayCenter.y],
@@ -193,6 +194,28 @@ public class MapGenerator : MonoBehaviour
                 }
             }
         } // Room
+
+        for (int i = 0; i < wholeMapSize.x; ++i)
+        {
+            for (int j = 0; j < wholeMapSize.y; ++j)
+            {
+                Coord wayPoint = new Vector2Int(i, j) * 2 + new Vector2Int(1, 1);
+                if (!roomMap[i, j] && !ClosedMap(unassessableFlag, wayPoint.x, wayPoint.y))
+                {
+                    Vector3 tilePos = CoordToVector(i, j);
+                    Room newTile = Instantiate<GameObject>(TilePrefab, tilePos, Quaternion.identity).GetComponent<Room>();
+                    newTile.transform.name = MapUtility.getRoomName(i, j);
+                    newTile.transform.parent = MapHolder.transform;
+                    roomMap[i, j] = newTile;
+                    roomMap[i, j].hallway = true;
+                    roomMap[i, j].SetDoorStyle(
+                        !unassessableFlag[wayPoint.x + 1, wayPoint.y], 
+                        !unassessableFlag[wayPoint.x - 1, wayPoint.y],
+                        !unassessableFlag[wayPoint.x, wayPoint.y + 1],
+                        !unassessableFlag[wayPoint.x, wayPoint.y - 1]);
+                }
+            }
+        } // Floor
 
         Door2[,] doors_h = new Door2[wholeMapSize.x - 1, wholeMapSize.y];
         Door2[,] doors_v = new Door2[wholeMapSize.x, wholeMapSize.y - 1];
@@ -216,21 +239,6 @@ public class MapGenerator : MonoBehaviour
                 }
             }
         } // Door
-
-        for (int i = 0; i < wholeMapSize.x; ++i)
-        {
-            for (int j = 0; j < wholeMapSize.y; ++j)
-            {
-                if (!roomMap[i, j])
-                {
-                    Vector3 tilePos = CoordToVector(i, j);
-                    Room newTile = Instantiate<GameObject>(TilePrefab, tilePos, Quaternion.identity).GetComponent<Room>();
-                    newTile.transform.name = MapUtility.getRoomName(i, j);
-                    newTile.transform.parent = MapHolder.transform;
-                    roomMap[i, j] = newTile;
-                }
-            }
-        } // Floor
     }
 
     bool MapIsFullyAccessible(bool[,] obstacleMap, int currentObstacleCount, Vector2Int Start)
