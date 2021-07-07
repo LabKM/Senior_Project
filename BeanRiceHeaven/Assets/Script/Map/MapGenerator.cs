@@ -59,7 +59,7 @@ public class MapGenerator : MonoBehaviour
         return result;
     }
 
-    public bool[,] SetMapFlag(bool[,] unassessableFlag){
+    public void SetFlagMap(bool[,] unassessableFlag){
         // 방의 형태 결정
         // wholeMapSize의 x2 + 1짜리 공간 생성
         int unassessableTile = 0;
@@ -144,8 +144,58 @@ public class MapGenerator : MonoBehaviour
                 i = numOfway;
             }
          }
+    }
 
-         return unassessableFlag;
+    Coord GetDeepestRoom(bool[,] flagMap, Coord Start){
+        // 시작 지점부터 상하좌우로 한 칸씩 확인 하면서 모든 방에 최소 접근 횟수 기록해서 가장 깊이 있는 방을 리턴 
+        int[,] roomMap = new int[flagMap.GetLength(0) / 2, flagMap.GetLength(1) / 2];
+        for(int i = 0; i < roomMap.GetLength(0); ++i){
+            for(int j = 0; j < roomMap.GetLength(1); ++j){
+                roomMap[i,j] = int.MaxValue;
+            }
+        }
+
+        Queue<Coord> curList = new Queue<Coord>();
+        Queue<Coord> curListWait = new Queue<Coord>();
+        curList.Enqueue(Start);
+        roomMap[Start.x, Start.y] = 0;
+
+        Coord DeepestRoom = Start;
+
+        while(curList.Count > 0){
+            Coord cur = curList.Dequeue();
+            //Debug.Log(cur.x.ToString() + ", " + cur.y.ToString());
+
+            for (int x = -1; x <= 1; ++x)
+            {
+                for (int y = -1; y <= 1; ++ y)
+                {
+                    int neighbourX = cur.x + x;
+                    int neighbourY = cur.y + y;
+                    if (x != y && x==0 || y == 0)
+                    {
+                        if ((neighbourX >= 0 && neighbourX < roomMap.GetLength(0) && neighbourY >= 0 && neighbourY < roomMap.GetLength(1))
+                            && !flagMap[cur.x * 2 + 1 + x, cur.y * 2 + 1 + y] && (roomMap[neighbourX, neighbourY] > roomMap[cur.x, cur.y] + 1)) 
+                        {
+                            roomMap[neighbourX, neighbourY] = roomMap[cur.x, cur.y] + 1;
+                            curListWait.Enqueue(new Coord(neighbourX, neighbourY));
+                            if(roomMap[DeepestRoom.x, DeepestRoom.y] < roomMap[neighbourX, neighbourY]){
+                                DeepestRoom.x = neighbourX;
+                                DeepestRoom.y = neighbourY;
+                            }
+                        }
+                    }
+                }
+            }  
+
+            if(curList.Count < 1){
+                Queue<Coord> temp = curList;
+                curList = curListWait;
+                curListWait = temp;
+            }
+        }
+
+        return DeepestRoom;
     }
 
     public void GenerateMap()
@@ -171,8 +221,48 @@ public class MapGenerator : MonoBehaviour
         // 방의 형태 결정
         // wholeMapSize의 x2 + 1짜리 공간 생성
         bool[,] unassessableFlag = new bool[wholeMapSize.x * 2 + 1, wholeMapSize.y * 2 + 1];;
-        unassessableFlag = SetMapFlag(unassessableFlag);
+        SetFlagMap(unassessableFlag);
 
+
+        // 방의 형태 기반으로 3칸씩 읽어서 구현
+        // 시작 위치 결정 랜덤한 위치 하나 골라서 
+        Coord StartPoint = GetRandomCoord(); 
+        if(NumOfRoom > 0){
+            NumOfRoom--;
+            Coord randomCoord = StartPoint; 
+            Vector3 roomPos = CoordToVector(randomCoord.x, randomCoord.y);
+            roomMap[randomCoord.x, randomCoord.y] = Instantiate<GameObject>(RoomPrefab, roomPos, Quaternion.identity).GetComponent<Room>();
+            Coord wayCenter = randomCoord * 2 + new Vector2Int(1, 1);
+            roomMap[randomCoord.x, randomCoord.y].hallway = false;
+            roomMap[randomCoord.x, randomCoord.y].startPoint = true;
+            roomMap[randomCoord.x, randomCoord.y].SetDoorStyle(
+                !unassessableFlag[wayCenter.x + 1, wayCenter.y], 
+                !unassessableFlag[wayCenter.x - 1, wayCenter.y],
+                !unassessableFlag[wayCenter.x, wayCenter.y + 1],
+                !unassessableFlag[wayCenter.x, wayCenter.y - 1]);
+            roomMap[randomCoord.x, randomCoord.y].transform.parent = MapHolder.transform;
+            roomMap[randomCoord.x, randomCoord.y].transform.name = MapUtility.getRoomName(randomCoord.x, randomCoord.y) + "_Start";
+        }
+        // 목표 방 위치 결정 가장 깊은 방으로 설정함
+        if(NumOfRoom > 0){
+            NumOfRoom--;
+            Coord randomCoord = GetDeepestRoom(unassessableFlag, StartPoint); 
+            Vector3 roomPos = CoordToVector(randomCoord.x, randomCoord.y);
+            roomMap[randomCoord.x, randomCoord.y] = Instantiate<GameObject>(RoomPrefab, roomPos, Quaternion.identity).GetComponent<Room>();
+            Coord wayCenter = randomCoord * 2 + new Vector2Int(1, 1);
+            roomMap[randomCoord.x, randomCoord.y].hallway = false;
+            roomMap[randomCoord.x, randomCoord.y].goalPoint = true;
+            roomMap[randomCoord.x, randomCoord.y].SetDoorStyle(
+                !unassessableFlag[wayCenter.x + 1, wayCenter.y], 
+                !unassessableFlag[wayCenter.x - 1, wayCenter.y],
+                !unassessableFlag[wayCenter.x, wayCenter.y + 1],
+                !unassessableFlag[wayCenter.x, wayCenter.y - 1]);
+            roomMap[randomCoord.x, randomCoord.y].transform.parent = MapHolder.transform;
+            roomMap[randomCoord.x, randomCoord.y].transform.name = MapUtility.getRoomName(randomCoord.x, randomCoord.y) + "_Goal";
+        }
+
+
+        // 방 생성
         for(int  i = 0; i < NumOfRoom; ++i){
             Coord randomCoord = GetRandomCoord();
             if(roomMap[randomCoord.x, randomCoord.y] != null){ // roomMap이 뭔가로 채워진 경우 다시 
@@ -180,8 +270,8 @@ public class MapGenerator : MonoBehaviour
             }else{ // 방 인스턴스화 하기 
                 Coord wayCenter = randomCoord * 2 + new Vector2Int(1, 1);
                 if( !ClosedMap(unassessableFlag, wayCenter.x, wayCenter.y) ){
-                    Vector3 obstaclePos = CoordToVector(randomCoord.x, randomCoord.y);
-                    GameObject newObstacle = Instantiate<GameObject>(RoomPrefab, obstaclePos, Quaternion.identity);
+                    Vector3 roomPos = CoordToVector(randomCoord.x, randomCoord.y);
+                    GameObject newObstacle = Instantiate<GameObject>(RoomPrefab, roomPos, Quaternion.identity);
                     roomMap[randomCoord.x, randomCoord.y] = newObstacle.GetComponent<Room>();
                     roomMap[randomCoord.x, randomCoord.y].hallway = false;
                     roomMap[randomCoord.x, randomCoord.y].SetDoorStyle(
@@ -194,7 +284,7 @@ public class MapGenerator : MonoBehaviour
                 }
             }
         } // Room
-
+        // 복도 생성
         for (int i = 0; i < wholeMapSize.x; ++i)
         {
             for (int j = 0; j < wholeMapSize.y; ++j)
@@ -202,8 +292,8 @@ public class MapGenerator : MonoBehaviour
                 Coord wayPoint = new Vector2Int(i, j) * 2 + new Vector2Int(1, 1);
                 if (!roomMap[i, j] && !ClosedMap(unassessableFlag, wayPoint.x, wayPoint.y))
                 {
-                    Vector3 tilePos = CoordToVector(i, j);
-                    Room newTile = Instantiate<GameObject>(TilePrefab, tilePos, Quaternion.identity).GetComponent<Room>();
+                    Vector3 roomPos = CoordToVector(i, j);
+                    Room newTile = Instantiate<GameObject>(TilePrefab, roomPos, Quaternion.identity).GetComponent<Room>();
                     newTile.transform.name = MapUtility.getRoomName(i, j);
                     newTile.transform.parent = MapHolder.transform;
                     roomMap[i, j] = newTile;
@@ -216,7 +306,7 @@ public class MapGenerator : MonoBehaviour
                 }
             }
         } // Floor
-
+        // 문 생성
         Door2[,] doors_h = new Door2[wholeMapSize.x - 1, wholeMapSize.y];
         Door2[,] doors_v = new Door2[wholeMapSize.x, wholeMapSize.y - 1];
         for(int i = 0; i < doors_h.GetLength(0); ++i){
@@ -241,7 +331,7 @@ public class MapGenerator : MonoBehaviour
         } // Door
     }
 
-    bool MapIsFullyAccessible(bool[,] obstacleMap, int currentObstacleCount, Vector2Int Start)
+    bool MapIsFullyAccessible(bool[,] obstacleMap, int currentObstacleCount, Coord Start)
     {
         bool[,] mapFlag = new bool[obstacleMap.GetLength(0), obstacleMap.GetLength(1)];
 

@@ -46,6 +46,8 @@ public class Room : MonoBehaviour
     public List<Transform> doors; // 동(x+) 서(x-) 남(z-) 북(z+) 순서
 
     public bool hallway{ set; get; }
+    public bool startPoint{ set; get; }
+    public bool goalPoint{set; get;}
 
     Quaternion room_rotation;
 
@@ -84,24 +86,30 @@ public class Room : MonoBehaviour
                     break;
             }
         }else{
-            switch(m_style){
-                case Style.Room00:
-                    break;
-                case Style.Room01:  
-                    prefab_roomset = Resources.Load<GameObject>("Map2/Room01/Room01Set"+((int)Random.Range(0.0f, 2.9f)).ToString());
-                    break;
-                case Style.Room02:
-                    prefab_roomset = Resources.Load<GameObject>("Map2/Room02/Room02Set"+((int)Random.Range(0.0f, 2.9f)).ToString());
-                    break;
-                case Style.Room03:
-                    prefab_roomset = Resources.Load<GameObject>("Map2/Room03/Room03Set" + ((int)Random.Range(0.0f, 2.9f)).ToString());
-                    break;
-                case Style.Room04:
-                    prefab_roomset = Resources.Load<GameObject>("Map2/Room04/Room04Set" + ((int)Random.Range(0.0f, 2.9f)).ToString());
-                    break;
-                case Style.Room05:
-                    prefab_roomset = Resources.Load<GameObject>("Map2/Room05/Room05Set" + ((int)Random.Range(0.0f, 2.9f)).ToString());
-                    break;
+            if(startPoint){
+
+            }else if(goalPoint){
+                
+            }else{
+                switch(m_style){
+                    case Style.Room00:
+                        break;
+                    case Style.Room01:  
+                        prefab_roomset = Resources.Load<GameObject>("Map2/Room01/Room01Set"+((int)Random.Range(0.0f, 2.9f)).ToString());
+                        break;
+                    case Style.Room02:
+                        prefab_roomset = Resources.Load<GameObject>("Map2/Room02/Room02Set"+((int)Random.Range(0.0f, 2.9f)).ToString());
+                        break;
+                    case Style.Room03:
+                        prefab_roomset = Resources.Load<GameObject>("Map2/Room03/Room03Set" + ((int)Random.Range(0.0f, 2.9f)).ToString());
+                        break;
+                    case Style.Room04:
+                        prefab_roomset = Resources.Load<GameObject>("Map2/Room04/Room04Set" + ((int)Random.Range(0.0f, 2.9f)).ToString());
+                        break;
+                    case Style.Room05:
+                        prefab_roomset = Resources.Load<GameObject>("Map2/Room05/Room05Set" + ((int)Random.Range(0.0f, 2.9f)).ToString());
+                        break;
+                }
             }
         }
         if(prefab_roomset == null)
