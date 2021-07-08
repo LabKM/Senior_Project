@@ -223,6 +223,7 @@ public class MapGenerator : MonoBehaviour
         bool[,] unassessableFlag = new bool[wholeMapSize.x * 2 + 1, wholeMapSize.y * 2 + 1];;
         SetFlagMap(unassessableFlag);
 
+        GameManager gm = transform.GetComponent<GameManager>();
 
         // 방의 형태 기반으로 3칸씩 읽어서 구현
         // 시작 위치 결정 랜덤한 위치 하나 골라서 
@@ -242,6 +243,7 @@ public class MapGenerator : MonoBehaviour
                 !unassessableFlag[wayCenter.x, wayCenter.y - 1]);
             roomMap[randomCoord.x, randomCoord.y].transform.parent = MapHolder.transform;
             roomMap[randomCoord.x, randomCoord.y].transform.name = MapUtility.getRoomName(randomCoord.x, randomCoord.y) + "_Start";
+            gm.StartPoint = roomMap[randomCoord.x, randomCoord.y].transform;
         }
         // 목표 방 위치 결정 가장 깊은 방으로 설정함
         if(NumOfRoom > 0){
@@ -259,6 +261,7 @@ public class MapGenerator : MonoBehaviour
                 !unassessableFlag[wayCenter.x, wayCenter.y - 1]);
             roomMap[randomCoord.x, randomCoord.y].transform.parent = MapHolder.transform;
             roomMap[randomCoord.x, randomCoord.y].transform.name = MapUtility.getRoomName(randomCoord.x, randomCoord.y) + "_Goal";
+            gm.GoalPoint = roomMap[randomCoord.x, randomCoord.y].transform;
         }
 
 
